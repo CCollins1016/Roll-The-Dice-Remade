@@ -14,7 +14,7 @@ struct ContentView: View {
         VStack {
             Text("Dice Roll")
                 .font(.largeTitle)
-               Image("pips \(randomValue)")
+            Image("pips \(randomValue)")
                 .resizable()
                 .frame(width: 200, height: 200)
                 .rotationEffect(.degrees(rotation))
@@ -22,13 +22,21 @@ struct ContentView: View {
                 .font(.largeTitle)
                 .padding()
                 .onTapGesture {
-                    randomValue = Int.random(in: 1...6)
-                    withAnimation {
-                    rotation += 360
+                    chooseRandom(times: 3)
+                    withAnimation(.interpolatingSpring(Spring(stiffness: 10, damping: 2))) {
+                        rotation += 360
                     }
                 }
         }
         Spacer()
+    }
+    func chooseRandom(times:Int) {
+        if times > 0 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                randomValue = Int.random(in: 1...6)
+                chooseRandom (times: times - 1)
+            }
+        }
     }
 }
 
