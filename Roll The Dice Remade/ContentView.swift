@@ -8,11 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var randomValue = 0
     var body: some View {
         VStack {
             Text("Dice Roll")
+                .font(.largeTitle)
+                Text("\(randomValue)")
+                .font(.largeTitle)
+                .padding()
+                .onTapGesture {
+                    randomValue = Int.random(in: 1...6)
+                    
+                }
         }
-        .padding()
+        Spacer()
     }
 }
 
